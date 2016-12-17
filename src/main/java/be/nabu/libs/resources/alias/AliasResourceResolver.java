@@ -41,6 +41,8 @@ public class AliasResourceResolver implements ResourceResolver {
 	
 	public static void alias(String alias, URI uri) {
 		aliases.put(alias, uri);
+		// register in the factory
+		ResourceFactory.getInstance().setSchemeResolver(alias, new AliasResourceResolver(), true);
 	}
 
 	@Override
@@ -63,4 +65,7 @@ public class AliasResourceResolver implements ResourceResolver {
 		return new ArrayList<String>(aliases.keySet());
 	}
 
+	public static Map<String, URI> getAliases() {
+		return new HashMap<String, URI>(aliases);
+	}
 }
